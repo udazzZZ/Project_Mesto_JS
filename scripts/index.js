@@ -1,5 +1,7 @@
 const placesContainer = document.querySelector(".places__list");
 const profilePopup = document.querySelector(".popup_type_edit");
+const profileEditButton = document.querySelector(".profile__edit-button");
+const popupCloseButton = profilePopup.querySelector(".popup__close");
 
 // Функция для создания карточки
 function createCard(card) {
@@ -33,3 +35,15 @@ function openModal(popup) {
 function closeModal(popup) {
   popup.classList.remove('popup_is-opened');
 }
+
+// Обработчик события для кнопки редактирования профиля
+profileEditButton.addEventListener("click", () => {
+  profilePopup.querySelector(".popup__input_type_name").value = document.querySelector(".profile__title").textContent;
+  profilePopup.querySelector(".popup__input_type_description").value = document.querySelector(".profile__description").textContent;
+  openModal(profilePopup);
+});
+
+// Обработчик события для кнопки закрытия попапа
+popupCloseButton.addEventListener("click", () => {
+  closeModal(profilePopup);
+});
