@@ -1,4 +1,5 @@
 const placesContainer = document.querySelector(".places__list");
+const profilePopup = document.querySelector(".popup_type_edit");
 
 // Функция для создания карточки
 function createCard(card) {
@@ -22,3 +23,13 @@ initialCards.forEach((card) => {
 	const cardElement = createCard(card);
 	placesContainer.append(cardElement);
 });
+
+// Функция для открытия попапа
+function openModal(popup) {
+  popup.classList.add('popup_is-opened');
+}
+
+// Функция для закрытия попапа
+function closeModal(popup) {
+  popup.classList.remove('popup_is-opened');
+}
