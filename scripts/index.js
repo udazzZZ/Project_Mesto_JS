@@ -30,6 +30,11 @@ function createCard(name, link) {
 	cardImage.src = link;
 	cardImage.alt = name;
 
+	const likeButton = cardElement.querySelector(".card__like-button");
+	likeButton.addEventListener("click", () => {
+		likeButton.classList.toggle("card__like-button_is-active");
+	});
+
 	return cardElement;
 }
 
@@ -88,15 +93,15 @@ cardPopupCloseButton.addEventListener("click", () => {
 
 // Обработчик отправки формы добавления карточки
 function handleCardFormSubmit(evt) {
-  evt.preventDefault();
-  const name = cardNameInput.value;
-  const link = cardLinkInput.value;
+	evt.preventDefault();
+	const name = cardNameInput.value;
+	const link = cardLinkInput.value;
 
-  const newCard = createCard(name, link);
-  placesContainer.prepend(newCard);
-  closeModal(cardPopup);
-  cardNameInput.value = "";
-  cardLinkInput.value = "";
+	const newCard = createCard(name, link);
+	placesContainer.prepend(newCard);
+	closeModal(cardPopup);
+	cardNameInput.value = "";
+	cardLinkInput.value = "";
 }
 
 // Добавление обработчика события на отправку формы добавления карточки
