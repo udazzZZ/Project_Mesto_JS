@@ -12,6 +12,8 @@ const cardPopup = document.querySelector(".popup_type_new-card");
 const cardPopupCloseButton = cardPopup.querySelector(".popup__close");
 const imagePopup = document.querySelector(".popup_type_image");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
+const imagePopupImage = imagePopup.querySelector(".popup__image");
+const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 const cardFormElement = cardPopup.querySelector(".popup__form");
 const cardNameInput = cardPopup.querySelector(".popup__input_type_card-name");
 const cardLinkInput = cardPopup.querySelector(".popup__input_type_url");
@@ -39,6 +41,14 @@ function createCard(name, link) {
 	deleteButton.addEventListener("click", () =>
 		deleteButton.closest(".card").remove()
 	);
+
+	cardImage.addEventListener("click", () => {
+    imagePopupImage.src = link;
+    imagePopupCaption.textContent = name;
+    openModal(imagePopup);
+  });
+
+  imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
 	return cardElement;
 }
