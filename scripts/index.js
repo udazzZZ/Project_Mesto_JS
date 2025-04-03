@@ -43,12 +43,12 @@ function createCard(name, link) {
 	);
 
 	cardImage.addEventListener("click", () => {
-    imagePopupImage.src = link;
-    imagePopupCaption.textContent = name;
-    openModal(imagePopup);
-  });
+		imagePopupImage.src = link;
+		imagePopupCaption.textContent = name;
+		openModal(imagePopup);
+	});
 
-  imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
+	imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
 	return cardElement;
 }
@@ -92,6 +92,15 @@ function handleProfileFormSubmit(evt) {
 
 	closeModal(profilePopup);
 }
+
+// Добавление плавного открытия/закрытия попапа редактирования профиля
+profilePopup.classList.add("popup_is-animated");
+
+// Добавление плавного открытия/закрытия попапа добавления карточки
+cardPopup.classList.add("popup_is-animated");
+
+// Добавление плавного открытия/закрытия попапа просмотра изображения
+imagePopup.classList.add("popup_is-animated");
 
 // Добавление обработчика события на отпрвку форму
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
