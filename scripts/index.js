@@ -1,19 +1,25 @@
 const placesContainer = document.querySelector(".places__list");
+
 const profilePopup = document.querySelector(".popup_type_edit");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profilePopupCloseButton = profilePopup.querySelector(".popup__close");
+
 const profileFormElement = profilePopup.querySelector(".popup__form");
 const nameInput = profilePopup.querySelector(".popup__input_type_name");
 const jobInput = profilePopup.querySelector(".popup__input_type_description");
+
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
+
 const profileAddButton = document.querySelector(".profile__add-button");
 const cardPopup = document.querySelector(".popup_type_new-card");
 const cardPopupCloseButton = cardPopup.querySelector(".popup__close");
+
 const imagePopup = document.querySelector(".popup_type_image");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 const imagePopupImage = imagePopup.querySelector(".popup__image");
 const imagePopupCaption = imagePopup.querySelector(".popup__caption");
+
 const cardFormElement = cardPopup.querySelector(".popup__form");
 const cardNameInput = cardPopup.querySelector(".popup__input_type_card-name");
 const cardLinkInput = cardPopup.querySelector(".popup__input_type_url");
@@ -44,12 +50,10 @@ function createCard(name, link) {
 
 	cardImage.addEventListener("click", () => {
 		imagePopupImage.src = link;
-    imagePopupImage.alt = name;
+		imagePopupImage.alt = name;
 		imagePopupCaption.textContent = name;
 		openModal(imagePopup);
 	});
-
-	imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
 	return cardElement;
 }
@@ -77,7 +81,7 @@ profileEditButton.addEventListener("click", () => {
 	openModal(profilePopup);
 });
 
-// Обработчик события для кнопки закрытия попапа
+// Обработчик события для кнопки закрытия попапа редактирования профиля
 profilePopupCloseButton.addEventListener("click", () =>
 	closeModal(profilePopup)
 );
@@ -94,16 +98,7 @@ function handleProfileFormSubmit(evt) {
 	closeModal(profilePopup);
 }
 
-// Добавление плавного открытия/закрытия попапа редактирования профиля
-profilePopup.classList.add("popup_is-animated");
-
-// Добавление плавного открытия/закрытия попапа добавления карточки
-cardPopup.classList.add("popup_is-animated");
-
-// Добавление плавного открытия/закрытия попапа просмотра изображения
-imagePopup.classList.add("popup_is-animated");
-
-// Добавление обработчика события на отпрвку форму
+// Добавление обработчика события на отпрвку формы редактирования профиля
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 
 // Добавление обработчика события на кнопку добавления карточки
@@ -127,3 +122,15 @@ function handleCardFormSubmit(evt) {
 
 // Добавление обработчика события на отправку формы добавления карточки
 cardFormElement.addEventListener("submit", handleCardFormSubmit);
+
+// Обработчик события для кнопки закрытия попапа просмотра изображения
+imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
+
+// Добавление плавного открытия/закрытия попапа редактирования профиля
+profilePopup.classList.add("popup_is-animated");
+
+// Добавление плавного открытия/закрытия попапа добавления карточки
+cardPopup.classList.add("popup_is-animated");
+
+// Добавление плавного открытия/закрытия попапа просмотра изображения
+imagePopup.classList.add("popup_is-animated");
