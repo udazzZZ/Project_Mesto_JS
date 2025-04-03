@@ -1,12 +1,15 @@
 const placesContainer = document.querySelector(".places__list");
 const profilePopup = document.querySelector(".popup_type_edit");
 const profileEditButton = document.querySelector(".profile__edit-button");
-const popupCloseButton = profilePopup.querySelector(".popup__close");
+const profilePopupCloseButton = profilePopup.querySelector(".popup__close");
 const profileFormElement = profilePopup.querySelector(".popup__form");
 const nameInput = profilePopup.querySelector(".popup__input_type_name");
 const jobInput = profilePopup.querySelector(".popup__input_type_description");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
+const profileAddButton = document.querySelector(".profile__add-button");
+const cardPopup = document.querySelector(".popup_type_new-card");
+const cardPopupCloseButton = cardPopup.querySelector(".popup__close");
 
 // Функция для создания карточки
 function createCard(card) {
@@ -49,7 +52,7 @@ profileEditButton.addEventListener("click", () => {
 });
 
 // Обработчик события для кнопки закрытия попапа
-popupCloseButton.addEventListener("click", () => {
+profilePopupCloseButton.addEventListener("click", () => {
   closeModal(profilePopup);
 });
 
@@ -67,3 +70,14 @@ function handleProfileFormSubmit(evt) {
 
 // Добавление обработчика события на отпрвку форму
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
+
+// Добавление обработчика события на кнопку добавления карточки
+profileAddButton.addEventListener("click", () => {
+  openModal(cardPopup);
+});
+
+// Обработчик события для кнопки закрытия попапа карточки
+cardPopupCloseButton.addEventListener("click", () => {
+  closeModal(cardPopup);
+});
+
