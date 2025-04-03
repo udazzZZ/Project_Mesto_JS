@@ -11,4 +11,4 @@
 * Методология **Nested БЭМ** для структуры проекта
 
 ### **GitHub Pages**
-* [Ссылка на проект]()
+* [Ссылка на проект](https://udazzzz.github.io/Project_Mesto_JS/)
