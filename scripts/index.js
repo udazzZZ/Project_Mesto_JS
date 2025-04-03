@@ -44,6 +44,7 @@ function createCard(name, link) {
 
 	cardImage.addEventListener("click", () => {
 		imagePopupImage.src = link;
+    imagePopupImage.alt = name;
 		imagePopupCaption.textContent = name;
 		openModal(imagePopup);
 	});
