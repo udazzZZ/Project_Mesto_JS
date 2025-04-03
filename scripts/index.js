@@ -31,9 +31,14 @@ function createCard(name, link) {
 	cardImage.alt = name;
 
 	const likeButton = cardElement.querySelector(".card__like-button");
-	likeButton.addEventListener("click", () => {
-		likeButton.classList.toggle("card__like-button_is-active");
-	});
+	likeButton.addEventListener("click", () =>
+		likeButton.classList.toggle("card__like-button_is-active")
+	);
+
+	const deleteButton = cardElement.querySelector(".card__delete-button");
+	deleteButton.addEventListener("click", () =>
+		deleteButton.closest(".card").remove()
+	);
 
 	return cardElement;
 }
@@ -62,9 +67,9 @@ profileEditButton.addEventListener("click", () => {
 });
 
 // Обработчик события для кнопки закрытия попапа
-profilePopupCloseButton.addEventListener("click", () => {
-	closeModal(profilePopup);
-});
+profilePopupCloseButton.addEventListener("click", () =>
+	closeModal(profilePopup)
+);
 
 // Обработчик отправки формы редактирования профиля
 function handleProfileFormSubmit(evt) {
@@ -82,14 +87,10 @@ function handleProfileFormSubmit(evt) {
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 
 // Добавление обработчика события на кнопку добавления карточки
-profileAddButton.addEventListener("click", () => {
-	openModal(cardPopup);
-});
+profileAddButton.addEventListener("click", () => openModal(cardPopup));
 
 // Обработчик события для кнопки закрытия попапа карточки
-cardPopupCloseButton.addEventListener("click", () => {
-	closeModal(cardPopup);
-});
+cardPopupCloseButton.addEventListener("click", () => closeModal(cardPopup));
 
 // Обработчик отправки формы добавления карточки
 function handleCardFormSubmit(evt) {
