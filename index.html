@@ -50,14 +50,22 @@
 							class="popup__input popup__input_type_name"
 							placeholder="Имя"
 							required
+							minlength="2"
+							maxlength="40"
+							id="name-input"
 						/>
+						<span class="popup__input-error name-input-error"></span>
 						<input
 							type="text"
 							name="description"
 							class="popup__input popup__input_type_description"
 							placeholder="Занятие"
 							required
+							minlength="2"
+							maxlength="200"
+							id="description-input"
 						/>
+						<span class="popup__input-error description-input-error"></span>
 						<button type="submit" class="button popup__button">
 							Сохранить
 						</button>
