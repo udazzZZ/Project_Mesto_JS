@@ -26,9 +26,7 @@ const cardLinkInput = cardPopup.querySelector(".popup__input_type_url");
 
 // Функция для создания карточки
 function createCard(name, link) {
-	console.log(document.querySelector("#card-template"));
 	const cardTemplate = document.querySelector("#card-template").content;
-	console.log(cardTemplate);
 	const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
 	const cardName = cardElement.querySelector(".card__title");
@@ -64,14 +62,40 @@ initialCards.forEach((card) => {
 	placesContainer.append(cardElement);
 });
 
+function updateButtonState(popup) {
+	const formElement = popup.querySelector(validationSettings.formSelector);
+	const inputList = Array.from(
+		formElement.querySelectorAll(validationSettings.inputSelector)
+	);
+
+	toggleButtonState(inputList, formElement, validationSettings);
+}
+
 // Функция для открытия попапа
 function openModal(popup) {
+	if (popup.querySelector(validationSettings.formSelector)) {
+		updateButtonState(popup);
+	}
 	popup.classList.add("popup_is-opened");
+}
+
+function resetValidationErrors(popup) {
+	const formElement = popup.querySelector(validationSettings.formSelector);
+	const inputList = Array.from(
+		formElement.querySelectorAll(validationSettings.inputSelector)
+	);
+
+	inputList.forEach((inputElement) => {
+		hideInputError(formElement, inputElement, validationSettings);
+	});
 }
 
 // Функция для закрытия попапа
 function closeModal(popup) {
 	popup.classList.remove("popup_is-opened");
+	if (popup.querySelector(validationSettings.formSelector)) {
+		resetValidationErrors(popup);
+	}
 }
 
 // Обработчик события для кнопки редактирования профиля
@@ -102,7 +126,11 @@ function handleProfileFormSubmit(evt) {
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 
 // Добавление обработчика события на кнопку добавления карточки
-profileAddButton.addEventListener("click", () => openModal(cardPopup));
+profileAddButton.addEventListener("click", () => {
+	cardNameInput.value = "";
+	cardLinkInput.value = "";
+	openModal(cardPopup);
+});
 
 // Обработчик события для кнопки закрытия попапа карточки
 cardPopupCloseButton.addEventListener("click", () => closeModal(cardPopup));
@@ -116,8 +144,6 @@ function handleCardFormSubmit(evt) {
 	const newCard = createCard(name, link);
 	placesContainer.prepend(newCard);
 	closeModal(cardPopup);
-	cardNameInput.value = "";
-	cardLinkInput.value = "";
 }
 
 // Добавление обработчика события на отправку формы добавления карточки
@@ -223,3 +249,22 @@ const enableValidation = (validationSettings) => {
 };
 
 enableValidation(validationSettings);
+
+profilePopup.addEventListener("click", (evt) => {
+	console.log(evt.target);
+	if (evt.target === profilePopup) {
+		closeModal(profilePopup);
+	}
+});
+
+cardPopup.addEventListener("click", (evt) => {
+	if (evt.target !== evt.currentTarget.querySelector(".popup__content")) {
+		closeModal(cardPopup);
+	}
+});
+
+imagePopup.addEventListener("click", (evt) => {
+	if (evt.target !== evt.currentTarget.querySelector(".popup__content")) {
+		closeModal(imagePopup);
+	}
+});
