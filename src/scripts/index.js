@@ -258,13 +258,13 @@ profilePopup.addEventListener("click", (evt) => {
 });
 
 cardPopup.addEventListener("click", (evt) => {
-	if (evt.target !== evt.currentTarget.querySelector(".popup__content")) {
+	if (evt.target === cardPopup) {
 		closeModal(cardPopup);
 	}
 });
 
 imagePopup.addEventListener("click", (evt) => {
-	if (evt.target !== evt.currentTarget.querySelector(".popup__content")) {
+	if (evt.target === imagePopup) {
 		closeModal(imagePopup);
 	}
 });
