@@ -76,6 +76,7 @@ function openModal(popup) {
 	if (popup.querySelector(validationSettings.formSelector)) {
 		updateButtonState(popup);
 	}
+	document.addEventListener("keydown", closeByEsc);
 	popup.classList.add("popup_is-opened");
 }
 
@@ -96,6 +97,7 @@ function closeModal(popup) {
 	if (popup.querySelector(validationSettings.formSelector)) {
 		resetValidationErrors(popup);
 	}
+	document.removeEventListener("keydown", closeByEsc);
 }
 
 // Обработчик события для кнопки редактирования профиля
@@ -268,3 +270,10 @@ imagePopup.addEventListener("click", (evt) => {
 		closeModal(imagePopup);
 	}
 });
+
+function closeByEsc(evt) {
+	if (evt.key === "Escape") {
+		const openedPopup = document.querySelector(".popup_is-opened");
+		closeModal(openedPopup);
+	}
+}
