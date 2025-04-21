@@ -1,3 +1,7 @@
+import "../pages/index.css";
+
+import { initialCards } from "./cards.js";
+
 const placesContainer = document.querySelector(".places__list");
 
 const profilePopup = document.querySelector(".popup_type_edit");
@@ -197,16 +201,11 @@ const checkInputValidity = (formElement, inputElement, validationSettings) => {
 };
 
 const hasInvalidInput = (inputList) => {
-	console.log(inputList);
-	inputList.forEach((inputElement) => {
-		console.log(inputElement.validity);
-		console.log(inputElement.value);
-	});
 	return inputList.some((inputElement) => !inputElement.validity.valid);
 };
 
 const toggleButtonState = (inputList, formElement, validationSettings) => {
-	buttonElement = formElement.querySelector(
+	const buttonElement = formElement.querySelector(
 		validationSettings.submitButtonSelector
 	);
 	if (hasInvalidInput(inputList)) {
@@ -253,7 +252,6 @@ const enableValidation = (validationSettings) => {
 enableValidation(validationSettings);
 
 profilePopup.addEventListener("click", (evt) => {
-	console.log(evt.target);
 	if (evt.target === profilePopup) {
 		closeModal(profilePopup);
 	}
