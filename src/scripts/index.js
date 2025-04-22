@@ -1,7 +1,11 @@
 import "../pages/index.css";
 
-import { enableValidation, toggleButtonState, hideInputError } from "../components/validate.js";
-import { modal } from "../components/modal.js";
+import {
+	enableValidation,
+	toggleButtonState,
+	hideInputError,
+} from "../components/validate.js";
+import { getModal } from "../components/modal.js";
 import { createCard, initialCards } from "../components/card.js";
 
 // Попапы
@@ -62,7 +66,7 @@ const onClosePopup = (popup) => {
 	}
 };
 
-const { openModal, closeModal } = modal(onOpenPopup, onClosePopup);
+const { openModal, closeModal } = getModal(onOpenPopup, onClosePopup);
 
 // Перебор массива из 6 начальных карточек и добавление их на страницу
 initialCards.forEach((card) => {
@@ -81,12 +85,12 @@ initialCards.forEach((card) => {
 profileEditButton.addEventListener("click", () => {
 	nameInput.value = profileTitle.textContent;
 	jobInput.value = profileDescription.textContent;
-	openModal(profilePopup, onOpenPopup);
+	openModal(profilePopup);
 });
 
 // Обработчик события для кнопки закрытия попапа редактирования профиля
 profilePopupCloseButton.addEventListener("click", () =>
-	closeModal(profilePopup, onClosePopup)
+	closeModal(profilePopup)
 );
 
 // Обработчик отправки формы редактирования профиля
@@ -98,7 +102,7 @@ function handleProfileFormSubmit(evt) {
 	profileTitle.textContent = name;
 	profileDescription.textContent = job;
 
-	closeModal(profilePopup, onClosePopup);
+	closeModal(profilePopup);
 }
 
 // Добавление обработчика события на отпрвку формы редактирования профиля
@@ -108,7 +112,7 @@ profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 profileAddButton.addEventListener("click", () => {
 	cardNameInput.value = "";
 	cardLinkInput.value = "";
-	openModal(cardPopup, onOpenPopup);
+	openModal(cardPopup);
 });
 
 // Обработчик события для кнопки закрытия попапа карточки
@@ -122,7 +126,7 @@ function handleCardFormSubmit(evt) {
 
 	const newCard = createCard(name, link);
 	placesContainer.prepend(newCard);
-	closeModal(cardPopup, onClosePopup);
+	closeModal(cardPopup);
 }
 
 // Добавление обработчика события на отправку формы добавления карточки
@@ -155,18 +159,18 @@ enableValidation(validationSettings);
 // Обработка события клика на оверлей для закрытия попапа
 profilePopup.addEventListener("click", (evt) => {
 	if (evt.target === profilePopup) {
-		closeModal(profilePopup, onClosePopup);
+		closeModal(profilePopup);
 	}
 });
 
 cardPopup.addEventListener("click", (evt) => {
 	if (evt.target === cardPopup) {
-		closeModal(cardPopup, onClosePopup);
+		closeModal(cardPopup);
 	}
 });
 
 imagePopup.addEventListener("click", (evt) => {
 	if (evt.target === imagePopup) {
-		closeModal(imagePopup, onClosePopup);
+		closeModal(imagePopup);
 	}
 });

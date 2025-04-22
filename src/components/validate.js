@@ -5,7 +5,6 @@ const showInputError = (
 	validationSettings
 ) => {
 	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	console.log(`${inputElement.id}-error`);
 	inputElement.classList.add(validationSettings.inputErrorClass);
 	errorElement.textContent = errorMessage;
 	errorElement.classList.add(validationSettings.errorClass);

@@ -1,51 +1,30 @@
-// // Функция для открытия попапа
-// function openModal(popup, onOpenPopup) {
-// 	onOpenPopup(popup);
-// 	document.addEventListener("keydown", closeByEsc);
-// 	popup.classList.add("popup_is-opened");
-// }
+// Из модуля экспортируется функция getModal, принимающая в себя коллбэки, вызывающеся при открытии и закрытии попапа.
+// Решение было принято в целях инкапсуляции логики модуля и обеспечения переиспользования,
+// т.к. при открытии/закрытии модальных окон понадобилась логика, связанная со стилями и валидацией.
+const getModal = (onOpenPopup, onClosePopup) => {
+	const openModal = (popup) => {
+		onOpenPopup(popup);
+		popup.classList.add("popup_is-opened");
+		document.addEventListener("keydown", closeByEsc);
+	};
 
-// // Функция для закрытия попапа
-// function closeModal(popup, onClosePopup) {
-// 	popup.classList.remove("popup_is-opened");
-// 	onClosePopup(popup);
-// 	document.removeEventListener("keydown", closeByEsc);
-// }
+	const closeModal = (popup) => {
+		popup.classList.remove("popup_is-opened");
+		onClosePopup(popup);
+		document.removeEventListener("keydown", closeByEsc);
+	};
 
-// // Функкция для обработки события нажатия на клавишу Esc при закрытии попапа
-// function closeByEsc(evt) {
-// 	if (evt.key === "Escape") {
-// 		const openedPopup = document.querySelector(".popup_is-opened");
-// 		closeModal(openedPopup);
-// 	}
-// }
+	function closeByEsc(evt) {
+		if (evt.key === "Escape") {
+			const openedPopup = document.querySelector(".popup_is-opened");
+			closeModal(openedPopup, onClosePopup);
+		}
+	}
 
-// export { openModal, closeModal };
-
-const modal = (onClosePopup, onOpenPopup) => {
-  const openModal = (popup) => {
-    onOpenPopup(popup);
-    popup.classList.add("popup_is-opened");
-    document.addEventListener("keydown", closeByEsc);
-  };
-
-  const closeModal = (popup) => {
-    popup.classList.remove("popup_is-opened");
-    onClosePopup(popup);
-    document.removeEventListener("keydown", closeByEsc);
-  };
-
-  function closeByEsc(evt) {
-    if (evt.key === "Escape") {
-      const openedPopup = document.querySelector(".popup_is-opened");
-      closeModal(openedPopup, onClosePopup);
-    }
-  }
-
-  return {
-    openModal,
-    closeModal,
-  };
+	return {
+		openModal,
+		closeModal,
+	};
 };
 
-export { modal };
+export { getModal };
