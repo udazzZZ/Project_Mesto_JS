@@ -6,7 +6,7 @@ import {
 	hideInputError,
 } from "../components/validate.js";
 import { getModal } from "../components/modal.js";
-import { createCard, initialCards } from "../components/card.js";
+import { createCard } from "../components/card.js";
 import { getInitialCards, getUserInfo } from "../components/api.js";
 
 // Попапы
@@ -69,19 +69,6 @@ const onClosePopup = (popup) => {
 };
 
 const { openModal, closeModal } = getModal(onOpenPopup, onClosePopup);
-
-// Перебор массива из 6 начальных карточек и добавление их на страницу
-initialCards.forEach((card) => {
-	const cardElement = createCard(
-		card.name,
-		card.link,
-		imagePopup,
-		imagePopupImage,
-		imagePopupCaption,
-		openModal
-	);
-	placesContainer.append(cardElement);
-});
 
 // Обработчик события для кнопки редактирования профиля
 profileEditButton.addEventListener("click", () => {
@@ -187,3 +174,20 @@ getUserInfo()
 		console.log(err);
 	});
 
+getInitialCards()
+	.then((cards) => {
+		cards.forEach((card) => {
+			const cardElement = createCard(
+				card.name,
+				card.link,
+				imagePopup,
+				imagePopupImage,
+				imagePopupCaption,
+				openModal
+			);
+			placesContainer.append(cardElement);
+		});
+	})
+	.catch((err) => {
+		console.log(err);
+	});

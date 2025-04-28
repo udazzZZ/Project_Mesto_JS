@@ -1,30 +1,3 @@
-const initialCards = [
-	{
-		name: "Архыз",
-		link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-	},
-	{
-		name: "Челябинская область",
-		link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-	},
-	{
-		name: "Иваново",
-		link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-	},
-	{
-		name: "Камчатка",
-		link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-	},
-	{
-		name: "Холмогорский район",
-		link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-	},
-	{
-		name: "Байкал",
-		link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-	},
-];
-
 // Функция для создания карточки
 function createCard(name, link, imagePopup, imagePopupImage, imagePopupCaption, openModal) {
 	const cardTemplate = document.querySelector("#card-template").content;
@@ -57,4 +30,4 @@ function createCard(name, link, imagePopup, imagePopupImage, imagePopupCaption, 
 	return cardElement;
 }
 
-export { createCard, initialCards };
+export { createCard };
