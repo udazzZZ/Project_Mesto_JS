@@ -7,7 +7,11 @@ import {
 } from "../components/validate.js";
 import { getModal } from "../components/modal.js";
 import { createCard } from "../components/card.js";
-import { getInitialCards, getUserInfo } from "../components/api.js";
+import {
+	getInitialCards,
+	getUserInfo,
+	updateUserInfo,
+} from "../components/api.js";
 
 // Попапы
 const profilePopup = document.querySelector(".popup_type_edit");
@@ -88,8 +92,14 @@ function handleProfileFormSubmit(evt) {
 	const name = nameInput.value;
 	const job = jobInput.value;
 
-	profileTitle.textContent = name;
-	profileDescription.textContent = job;
+	updateUserInfo(name, job)
+		.then((info) => {
+			profileTitle.textContent = info.name;
+			profileDescription.textContent = info.about;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 
 	closeModal(profilePopup);
 }
