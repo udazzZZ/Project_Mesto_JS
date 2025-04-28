@@ -11,6 +11,7 @@ import {
 	getInitialCards,
 	getUserInfo,
 	updateUserInfo,
+	addNewCard,
 } from "../components/api.js";
 
 // Попапы
@@ -123,8 +124,22 @@ function handleCardFormSubmit(evt) {
 	const name = cardNameInput.value;
 	const link = cardLinkInput.value;
 
-	const newCard = createCard(name, link);
-	placesContainer.prepend(newCard);
+	addNewCard(name, link)
+		.then((card) => {
+			const newCard = createCard(
+				card.name,
+				card.link,
+				imagePopup,
+				imagePopupImage,
+				imagePopupCaption,
+				openModal
+			);
+			placesContainer.prepend(newCard);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+
 	closeModal(cardPopup);
 }
 
