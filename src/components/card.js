@@ -1,11 +1,22 @@
 // Функция для создания карточки
-function createCard(name, link, likes, imagePopup, imagePopupImage, imagePopupCaption, openModal) {
+function createCard(
+	name,
+	link,
+	likes,
+	ownerId,
+	userId,
+	imagePopup,
+	imagePopupImage,
+	imagePopupCaption,
+	openModal
+) {
 	const cardTemplate = document.querySelector("#card-template").content;
 	const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
 	const cardName = cardElement.querySelector(".card__title");
 	const cardImage = cardElement.querySelector(".card__image");
-	const cardLikesCount = cardElement.querySelector(".card__like-count")
+	const cardLikesCount = cardElement.querySelector(".card__like-count");
+	const deleteButton = cardElement.querySelector(".card__delete-button");
 
 	cardName.textContent = name;
 	cardImage.src = link;
@@ -17,10 +28,14 @@ function createCard(name, link, likes, imagePopup, imagePopupImage, imagePopupCa
 		likeButton.classList.toggle("card__like-button_is-active")
 	);
 
-	const deleteButton = cardElement.querySelector(".card__delete-button");
-	deleteButton.addEventListener("click", () =>
-		deleteButton.closest(".card").remove()
-	);
+	if (ownerId === userId) {
+		deleteButton.addEventListener("click", () =>
+			deleteButton.closest(".card").remove()
+		);
+	} else {
+		deleteButton.disabled = true;
+		deleteButton.style.display = "none";
+	}
 
 	cardImage.addEventListener("click", () => {
 		imagePopupImage.src = link;

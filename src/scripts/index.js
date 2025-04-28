@@ -129,6 +129,9 @@ function handleCardFormSubmit(evt) {
 			const newCard = createCard(
 				card.name,
 				card.link,
+				card.likes,
+				card.owner._id,
+				card.owner._id,
 				imagePopup,
 				imagePopupImage,
 				imagePopupCaption,
@@ -194,25 +197,29 @@ getUserInfo()
 		profileTitle.textContent = info.name;
 		profileDescription.textContent = info.about;
 		profileAvatar.src = info.avatar;
-	})
-	.catch((err) => {
-		console.log(err);
-	});
 
-getInitialCards()
-	.then((cards) => {
-		cards.forEach((card) => {
-			const cardElement = createCard(
-				card.name,
-				card.link,
-				card.likes,
-				imagePopup,
-				imagePopupImage,
-				imagePopupCaption,
-				openModal
-			);
-			placesContainer.append(cardElement);
-		});
+		const userId = info._id;
+
+		getInitialCards()
+			.then((cards) => {
+				cards.forEach((card) => {
+					const cardElement = createCard(
+						card.name,
+						card.link,
+						card.likes,
+						card.owner._id,
+						userId,
+						imagePopup,
+						imagePopupImage,
+						imagePopupCaption,
+						openModal
+					);
+					placesContainer.append(cardElement);
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	})
 	.catch((err) => {
 		console.log(err);
