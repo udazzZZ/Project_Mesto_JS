@@ -7,6 +7,7 @@ import {
 } from "../components/validate.js";
 import { getModal } from "../components/modal.js";
 import { createCard, initialCards } from "../components/card.js";
+import { getInitialCards, getUserInfo } from "../components/api.js";
 
 // Попапы
 const profilePopup = document.querySelector(".popup_type_edit");
@@ -39,6 +40,7 @@ const cardLinkInput = cardPopup.querySelector(".popup__input_type_url");
 // Заголовок и описание профиля
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
+const profileAvatar = document.querySelector(".profile__image");
 
 // Контейнер карточек
 const placesContainer = document.querySelector(".places__list");
@@ -174,3 +176,14 @@ imagePopup.addEventListener("click", (evt) => {
 		closeModal(imagePopup);
 	}
 });
+
+getUserInfo()
+	.then((info) => {
+		profileTitle.textContent = info.name;
+		profileDescription.textContent = info.about;
+		profileAvatar.src = info.avatar;
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+
