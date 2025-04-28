@@ -205,6 +205,7 @@ getInitialCards()
 			const cardElement = createCard(
 				card.name,
 				card.link,
+				card.likes,
 				imagePopup,
 				imagePopupImage,
 				imagePopupCaption,
