@@ -1,14 +1,16 @@
 // Функция для создания карточки
-function createCard(name, link, imagePopup, imagePopupImage, imagePopupCaption, openModal) {
+function createCard(name, link, likes, imagePopup, imagePopupImage, imagePopupCaption, openModal) {
 	const cardTemplate = document.querySelector("#card-template").content;
 	const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
 	const cardName = cardElement.querySelector(".card__title");
 	const cardImage = cardElement.querySelector(".card__image");
+	const cardLikesCount = cardElement.querySelector(".card__like-count")
 
 	cardName.textContent = name;
 	cardImage.src = link;
 	cardImage.alt = name;
+	cardLikesCount.textContent = likes.length;
 
 	const likeButton = cardElement.querySelector(".card__like-button");
 	likeButton.addEventListener("click", () =>
