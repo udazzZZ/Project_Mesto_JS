@@ -18,6 +18,7 @@ import {
 const profilePopup = document.querySelector(".popup_type_edit");
 const imagePopup = document.querySelector(".popup_type_image");
 const cardPopup = document.querySelector(".popup_type_new-card");
+const profileImagePopup = document.querySelector(".popup_type_new-image");
 
 // Элементы попапа с картинкой
 const imagePopupImage = imagePopup.querySelector(".popup__image");
@@ -26,21 +27,28 @@ const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 // Кнопки открытия попапов
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileAddButton = document.querySelector(".profile__add-button");
+const profileImageButton = document.querySelector(".profile__image");
 
 // Кнопки закрытия попапов
 const profilePopupCloseButton = profilePopup.querySelector(".popup__close");
 const cardPopupCloseButton = cardPopup.querySelector(".popup__close");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
+const profileImagePopupCloseButton =
+	profileImagePopup.querySelector(".popup__close");
 
 // Формы
 const profileFormElement = profilePopup.querySelector(".popup__form");
 const cardFormElement = cardPopup.querySelector(".popup__form");
+const profileImageFormElement = profileImagePopup.querySelector(".popup__form");
 
 // Инпуты
 const nameInput = profilePopup.querySelector(".popup__input_type_name");
 const jobInput = profilePopup.querySelector(".popup__input_type_description");
 const cardNameInput = cardPopup.querySelector(".popup__input_type_card-name");
 const cardLinkInput = cardPopup.querySelector(".popup__input_type_url");
+const imageLinkInput = profileImagePopup.querySelector(
+	".popup__input_type_image-link"
+);
 
 // Заголовок и описание профиля
 const profileTitle = document.querySelector(".profile__title");
@@ -158,6 +166,17 @@ cardPopup.classList.add("popup_is-animated");
 // Добавление плавного открытия/закрытия попапа просмотра изображения
 imagePopup.classList.add("popup_is-animated");
 
+profileImagePopup.classList.add("popup_is-animated");
+
+profileImageButton.addEventListener("click", () => {
+	imageLinkInput.value = "";
+	openModal(profileImagePopup);
+});
+
+profileImagePopupCloseButton.addEventListener("click", () =>
+	closeModal(profileImagePopup)
+);
+
 // Параметры валидации
 const validationSettings = {
 	formSelector: ".popup__form",
@@ -186,6 +205,12 @@ cardPopup.addEventListener("click", (evt) => {
 imagePopup.addEventListener("click", (evt) => {
 	if (evt.target === imagePopup) {
 		closeModal(imagePopup);
+	}
+});
+
+profileImagePopup.addEventListener("click", (evt) => {
+	if (evt.target === profileImagePopup) {
+		closeModal(profileImagePopup);
 	}
 });
 
