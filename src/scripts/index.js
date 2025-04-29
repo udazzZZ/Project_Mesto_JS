@@ -12,6 +12,7 @@ import {
 	getUserInfo,
 	updateUserInfo,
 	addNewCard,
+	updateAvatar,
 } from "../components/api.js";
 
 // Попапы
@@ -27,7 +28,6 @@ const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 // Кнопки открытия попапов
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileAddButton = document.querySelector(".profile__add-button");
-const profileImageButton = document.querySelector(".profile__image");
 
 // Кнопки закрытия попапов
 const profilePopupCloseButton = profilePopup.querySelector(".popup__close");
@@ -57,6 +57,36 @@ const profileAvatar = document.querySelector(".profile__image");
 
 // Контейнер карточек
 const placesContainer = document.querySelector(".places__list");
+
+getUserInfo()
+	.then((info) => {
+		profileTitle.textContent = info.name;
+		profileDescription.textContent = info.about;
+		profileAvatar.style.backgroundImage = `url(${info.avatar})`;
+
+		const userId = info._id;
+
+		getInitialCards()
+			.then((cards) => {
+				cards.forEach((card) => {
+					const cardElement = createCard(
+						card,
+						userId,
+						imagePopup,
+						imagePopupImage,
+						imagePopupCaption,
+						openModal
+					);
+					placesContainer.append(cardElement);
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 const onOpenPopup = (popup) => {
 	const formElement = popup.querySelector(validationSettings.formSelector);
@@ -151,6 +181,27 @@ function handleCardFormSubmit(evt) {
 	closeModal(cardPopup);
 }
 
+// Обработчик отправки формы редактирования аватара
+function handleProfileImageFormSubmit(evt) {
+	evt.preventDefault();
+	const link = imageLinkInput.value;
+
+	updateAvatar(link)
+		.then((res) => {
+			profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+
+	closeModal(profileImagePopup);
+}
+
+profileImageFormElement.addEventListener(
+	"submit",
+	handleProfileImageFormSubmit
+);
+
 // Добавление обработчика события на отправку формы добавления карточки
 cardFormElement.addEventListener("submit", handleCardFormSubmit);
 
@@ -168,7 +219,7 @@ imagePopup.classList.add("popup_is-animated");
 
 profileImagePopup.classList.add("popup_is-animated");
 
-profileImageButton.addEventListener("click", () => {
+profileAvatar.addEventListener("click", () => {
 	imageLinkInput.value = "";
 	openModal(profileImagePopup);
 });
@@ -213,33 +264,3 @@ profileImagePopup.addEventListener("click", (evt) => {
 		closeModal(profileImagePopup);
 	}
 });
-
-getUserInfo()
-	.then((info) => {
-		profileTitle.textContent = info.name;
-		profileDescription.textContent = info.about;
-		profileAvatar.src = info.avatar;
-
-		const userId = info._id;
-
-		getInitialCards()
-			.then((cards) => {
-				cards.forEach((card) => {
-					const cardElement = createCard(
-						card,
-						userId,
-						imagePopup,
-						imagePopupImage,
-						imagePopupCaption,
-						openModal
-					);
-					placesContainer.append(cardElement);
-				});
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	})
-	.catch((err) => {
-		console.log(err);
-	});
