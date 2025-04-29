@@ -127,10 +127,7 @@ function handleCardFormSubmit(evt) {
 	addNewCard(name, link)
 		.then((card) => {
 			const newCard = createCard(
-				card.name,
-				card.link,
-				card.likes,
-				card.owner._id,
+				card,
 				card.owner._id,
 				imagePopup,
 				imagePopupImage,
@@ -204,10 +201,7 @@ getUserInfo()
 			.then((cards) => {
 				cards.forEach((card) => {
 					const cardElement = createCard(
-						card.name,
-						card.link,
-						card.likes,
-						card.owner._id,
+						card,
 						userId,
 						imagePopup,
 						imagePopupImage,
