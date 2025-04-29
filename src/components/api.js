@@ -66,7 +66,44 @@ const deleteCard = (cardId) => {
 	return fetch(`${config.baseUrl}/cards/${cardId}`, {
 		method: "DELETE",
 		headers: config.headers,
+	}).then((res) => {
+		if (res.ok) {
+			return res.json();
+		}
+		return Promise.reject(`Ошибка: ${res}`);
 	});
 };
 
-export { getInitialCards, getUserInfo, updateUserInfo, addNewCard, deleteCard };
+const likeCard = (cardId) => {
+	return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+		method: "PUT",
+		headers: config.headers,
+	}).then((res) => {
+		if (res.ok) {
+			return res.json();
+		}
+		return Promise.reject(`Ошибка: ${res}`);
+	});
+};
+
+const unlikeCard = (cardId) => {
+	return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+		method: "DELETE",
+		headers: config.headers,
+	}).then((res) => {
+		if (res.ok) {
+			return res.json();
+		}
+		return Promise.reject(`Ошибка: ${res}`);
+	});
+};
+
+export {
+	getInitialCards,
+	getUserInfo,
+	updateUserInfo,
+	addNewCard,
+	deleteCard,
+	likeCard,
+	unlikeCard,
+};
