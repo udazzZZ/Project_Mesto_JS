@@ -12,12 +12,14 @@ import {
 	getUserInfo,
 	updateUserInfo,
 	addNewCard,
+	updateAvatar,
 } from "../components/api.js";
 
 // Попапы
 const profilePopup = document.querySelector(".popup_type_edit");
 const imagePopup = document.querySelector(".popup_type_image");
 const cardPopup = document.querySelector(".popup_type_new-card");
+const profileImagePopup = document.querySelector(".popup_type_new-image");
 
 // Элементы попапа с картинкой
 const imagePopupImage = imagePopup.querySelector(".popup__image");
@@ -31,16 +33,22 @@ const profileAddButton = document.querySelector(".profile__add-button");
 const profilePopupCloseButton = profilePopup.querySelector(".popup__close");
 const cardPopupCloseButton = cardPopup.querySelector(".popup__close");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
+const profileImagePopupCloseButton =
+	profileImagePopup.querySelector(".popup__close");
 
 // Формы
 const profileFormElement = profilePopup.querySelector(".popup__form");
 const cardFormElement = cardPopup.querySelector(".popup__form");
+const profileImageFormElement = profileImagePopup.querySelector(".popup__form");
 
 // Инпуты
 const nameInput = profilePopup.querySelector(".popup__input_type_name");
 const jobInput = profilePopup.querySelector(".popup__input_type_description");
 const cardNameInput = cardPopup.querySelector(".popup__input_type_card-name");
 const cardLinkInput = cardPopup.querySelector(".popup__input_type_url");
+const imageLinkInput = profileImagePopup.querySelector(
+	".popup__input_type_image-link"
+);
 
 // Заголовок и описание профиля
 const profileTitle = document.querySelector(".profile__title");
@@ -49,6 +57,36 @@ const profileAvatar = document.querySelector(".profile__image");
 
 // Контейнер карточек
 const placesContainer = document.querySelector(".places__list");
+
+getUserInfo()
+	.then((info) => {
+		profileTitle.textContent = info.name;
+		profileDescription.textContent = info.about;
+		profileAvatar.style.backgroundImage = `url(${info.avatar})`;
+
+		const userId = info._id;
+
+		getInitialCards()
+			.then((cards) => {
+				cards.forEach((card) => {
+					const cardElement = createCard(
+						card,
+						userId,
+						imagePopup,
+						imagePopupImage,
+						imagePopupCaption,
+						openModal
+					);
+					placesContainer.append(cardElement);
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 const onOpenPopup = (popup) => {
 	const formElement = popup.querySelector(validationSettings.formSelector);
@@ -143,6 +181,27 @@ function handleCardFormSubmit(evt) {
 	closeModal(cardPopup);
 }
 
+// Обработчик отправки формы редактирования аватара
+function handleProfileImageFormSubmit(evt) {
+	evt.preventDefault();
+	const link = imageLinkInput.value;
+
+	updateAvatar(link)
+		.then((res) => {
+			profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+
+	closeModal(profileImagePopup);
+}
+
+profileImageFormElement.addEventListener(
+	"submit",
+	handleProfileImageFormSubmit
+);
+
 // Добавление обработчика события на отправку формы добавления карточки
 cardFormElement.addEventListener("submit", handleCardFormSubmit);
 
@@ -157,6 +216,17 @@ cardPopup.classList.add("popup_is-animated");
 
 // Добавление плавного открытия/закрытия попапа просмотра изображения
 imagePopup.classList.add("popup_is-animated");
+
+profileImagePopup.classList.add("popup_is-animated");
+
+profileAvatar.addEventListener("click", () => {
+	imageLinkInput.value = "";
+	openModal(profileImagePopup);
+});
+
+profileImagePopupCloseButton.addEventListener("click", () =>
+	closeModal(profileImagePopup)
+);
 
 // Параметры валидации
 const validationSettings = {
@@ -189,32 +259,8 @@ imagePopup.addEventListener("click", (evt) => {
 	}
 });
 
-getUserInfo()
-	.then((info) => {
-		profileTitle.textContent = info.name;
-		profileDescription.textContent = info.about;
-		profileAvatar.src = info.avatar;
-
-		const userId = info._id;
-
-		getInitialCards()
-			.then((cards) => {
-				cards.forEach((card) => {
-					const cardElement = createCard(
-						card,
-						userId,
-						imagePopup,
-						imagePopupImage,
-						imagePopupCaption,
-						openModal
-					);
-					placesContainer.append(cardElement);
-				});
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+profileImagePopup.addEventListener("click", (evt) => {
+	if (evt.target === profileImagePopup) {
+		closeModal(profileImagePopup);
+	}
+});
