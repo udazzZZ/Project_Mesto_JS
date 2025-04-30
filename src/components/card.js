@@ -52,6 +52,7 @@ function createCard(
 		deleteButton.addEventListener("click", () => {
 			deleteCard(card._id)
 				.then((res) => {
+					deleteButton.closest(".card").remove();
 					console.log(res);
 				})
 				.catch((err) => {
@@ -59,7 +60,6 @@ function createCard(
 				});
 		});
 	} else {
-		deleteButton.disabled = true;
 		deleteButton.style.display = "none";
 	}
 

@@ -131,16 +131,22 @@ function handleProfileFormSubmit(evt) {
 	const name = nameInput.value;
 	const job = jobInput.value;
 
+	const button = evt.target.querySelector(".button");
+
+	renderLoading(true, button);
+
 	updateUserInfo(name, job)
 		.then((info) => {
 			profileTitle.textContent = info.name;
 			profileDescription.textContent = info.about;
+			closeModal(profilePopup);
 		})
 		.catch((err) => {
 			console.log(err);
+		})
+		.finally(() => {
+			renderLoading(false, button);
 		});
-
-	closeModal(profilePopup);
 }
 
 // Добавление обработчика события на отпрвку формы редактирования профиля
@@ -162,6 +168,10 @@ function handleCardFormSubmit(evt) {
 	const name = cardNameInput.value;
 	const link = cardLinkInput.value;
 
+	const button = evt.target.querySelector(".button");
+
+	renderLoading(true, button);
+
 	addNewCard(name, link)
 		.then((card) => {
 			const newCard = createCard(
@@ -173,12 +183,14 @@ function handleCardFormSubmit(evt) {
 				openModal
 			);
 			placesContainer.prepend(newCard);
+			closeModal(cardPopup);
 		})
 		.catch((err) => {
 			console.log(err);
+		})
+		.finally(() => {
+			renderLoading(false, button);
 		});
-
-	closeModal(cardPopup);
 }
 
 // Обработчик отправки формы редактирования аватара
@@ -186,15 +198,21 @@ function handleProfileImageFormSubmit(evt) {
 	evt.preventDefault();
 	const link = imageLinkInput.value;
 
+	const button = evt.target.querySelector(".button");
+
+	renderLoading(true, button);
+
 	updateAvatar(link)
 		.then((res) => {
 			profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+			closeModal(profileImagePopup);
 		})
 		.catch((err) => {
 			console.log(err);
+		})
+		.finally(() => {
+			renderLoading(false, button);
 		});
-
-	closeModal(profileImagePopup);
 }
 
 profileImageFormElement.addEventListener(
@@ -264,3 +282,11 @@ profileImagePopup.addEventListener("click", (evt) => {
 		closeModal(profileImagePopup);
 	}
 });
+
+function renderLoading(isLoading, button) {
+	if (isLoading) {
+		button.textContent = "Сохранение...";
+	} else {
+		button.textContent = "Сохранить";
+	}
+}
